@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: white;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden;
+        background-color: white;
+        box-shadow: #6e9cda 0px 0px 10px;
+        padding: 15px 10px;
+        height: 70px;
+      }
+
+      .container-body {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+
+      .right-side {
+        display: flex;
+        height: 50%;
+        width: 20%;
+        margin-left: 30px;
+      }
+      .button-container {
+        display: flex;
+        flex-direction: column;
+      }
+      #buttons {
+        width: 80vw;
+        margin: auto;
+        text-align: center;
+      }
+      .button {
+        border: none;
+        color: white;
+        padding: 13px 50px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 50px 20px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border-radius: 5%;
+      }
+
+      .button2 {
+        background-color: #6e9cda;
+        color: rgb(255, 255, 255);
+      }
+
+      .button2:hover {
+        background-color: #2d5e9e;
+        color: white;
+      }
+
+      .left-side {
+        width: 80%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+      .search-bar {
+        width: 50%;
+        height: 10%;
+        min-height: 60px;
+        align-items: center;
+        display: flex;
+      }
+      .searchform {
+        background: rgba(244, 244, 244, 0.79);
+        border: 1px solid #d3d3d3;
+        box-shadow: 0 4px 9px rgba(0, 0, 0, 0.37);
+        border-radius: 10px;
+        width: 100%;
+      }
+
+      .searchform input {
+        background: #fefefe;
+        width: 70%;
+        border: none;
+        padding: 13px;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.4) inset,
+          1px 1px 1px rgba(255, 255, 255, 0.75);
+        border-radius: 9px;
+      }
+      .searchform input:focus {
+        outline: none;
+        box-shadow: 0 0 4px #0d76be inset;
+      }
+      .searchform button {
+        background: rgb(52, 173, 236);
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        padding: 13px;
+        width: 30%;
+        float: right;
+        box-shadow: 0 0 2px #2692dd inset;
+        border-radius: 9px;
+      }
+      .searchform button:hover {
+        opacity: 0.9;
+      }
+
+      .output {
+        background-color: rebeccapurple;
+        width: 100%;
+        height: inherit;
+        background: transparent;
+        align-items: end;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      textarea {
+        width: 50%;
+        height: 650px;
+        background-color: #303f58;
+      }
+      #outputTextarea {
+        color: #fff;
+        text-align: center;
+        font-size: 20px;
+      }
+    </style>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-right">
+        <h3>Your IP is:</h3><p id="external-ip"></p>
+        <script>
+          $(document).ready(function () {
+            $.getJSON("https://api64.ipify.org?format=json", function (data) {
+              $("#external-ip").text(data.ip);
+            });
+          });
+        </script>
+      </div>
+      <div class="header-left">
+        <button class="button button2" onclick="window.location.href='/login'">
+          Sign In/Up
+        </button>
+      </div>
+    </div>
+    <div class="container-body">
+      <nav class="right-side">
+        <div id="buttons" class="button-container">
+          <button
+            class="button button2"
+            onclick="window.location.href='/ipinfo'"
+          >
+            IP Info
+          </button>
+          <button class="button button2" onclick="window.location.href='/ping'">
+            Ping
+          </button>
+          <button
+            class="button button2"
+            onclick="window.location.href='/WHOIS'"
+          >
+            Who Is
+          </button>
+          <button
+            class="button button2"
+            onclick="window.location.href='/checkport'"
+          >
+            Port Check
+          </button>
+          <button
+            class="button button2"
+            onclick="window.location.href='/traceroute'"
+          >
+            Traceroute
+          </button>
+        </div>
+      </nav>
+      <div class="left-side">
+        <div class="search-bar">
+          <form class="searchform">
+            <input  type="text" id="ipInput" name="ip" class="input"
+            placeholder="Enter IP address" />
+            <button type="button" onclick="sendIPWhois()">Whois</button>
+          </form>
+        </div>
+        <div class="output">
+          <textarea id="outputTextarea"></textarea>
+        </div>
+      </div>
+    </div>
+    <script>
+      function sendIPWhois() {
+    const ipInput = $("#ipInput");
+    const textArea = $("#outputTextarea");
+  
+    textArea.val("");
+  
+    const formData = new FormData();
+    formData.append("ip", ipInput.val());
+  
+    $.ajax({
+      url: "/WHOIS",
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(response) {
+        textArea.val(response.result);
+      },
+      error: function(xhr, status, error) {
+        textArea.val("Error: " + xhr.responseText);
+      }
+    });
+  
+    ipInput.val("");
+    ipInput.focus();
+  }
+    </script>
+  </body>
+</html>

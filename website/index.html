@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: white;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden;
+        background-color: white;
+        box-shadow: #6e9cda 0px 0px 10px; 
+        padding: 15px 10px;
+        height: 70px;
+      }
+
+      .container-body {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+
+      .right-side {
+        display: flex;
+        height: 50%;
+        width: 100%;
+        margin-left: 30px;
+      }
+      .button-container {
+        display: flex;
+        flex-direction: column;
+      }
+      #buttons {
+        width: 80vw;
+        margin: auto;
+        text-align: center;
+      }
+      .button {
+        border: none;
+        color: white;
+        padding: 13px 50px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 50px 20px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border-radius: 5%;
+      }
+
+      .button2 {
+        background-color: #6e9cda;
+        color: rgb(255, 255, 255);
+      }
+
+      .button2:hover {
+        background-color: #2d5e9e;
+        color: white;
+      }
+    </style>
+
+  <body>
+     <div class="header">
+      <div class="header-right" style=" display: inline-flex; width: 300px; align-items:center;">
+        <h3>Your IP is:</h3><p id="external-ip"></p>
+        <script>
+          $(document).ready(function () {
+            $.getJSON("https://api64.ipify.org?format=json", function (data) {
+              $("#external-ip").text(data.ip);
+            });
+          });
+        </script>
+      </div>
+
+      <div class="header-left">
+        <button class="button button2" onclick="window.location.href='/login'">
+          Sign In/Up
+        </button>
+      </div>
+    </div>
+    <div class="container-body">
+      <nav class="right-side">
+        <div id="buttons" class="button-container">
+          <button
+            class="button button2"
+            onclick="window.location.href='/ipinfo'"
+          >
+            IP Info
+          </button>
+          <label
+            >Shows Ip addresses Country, Region, City,AS Number, AS Name and
+            Domain Information</label
+          >
+
+          <button class="button button2" onclick="window.location.href='/ping'">
+            Ping
+          </button>
+          <label>Shows how long it takes for packets to reach host</label>
+          <button
+            class="button button2"
+            onclick="window.location.href='/WHOIS'"
+          >
+            Who Is
+          </button>
+          <label>Lists contact info for an IP or domain</label>
+          <button
+            class="button button2"
+            onclick="window.location.href='/checkport'"
+          >
+            Port Check
+          </button>
+          <label>Tests if TCP port is opened on specified IP</label>
+          <button
+            class="button button2"
+            onclick="window.location.href='/traceroute'"
+          >
+            Traceroute
+          </button>
+          <label>
+            Traces the route of packets to destination host from your computer
+          </label>
+        </div>
+      </nav>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+CREATE TABLE ip_locations (
+    ip_from INT,
+    ip_to INT,
+    country_code TEXT,
+    country_name TEXT,
+    region_name TEXT,
+    city_name TEXT
+);
+CREATE TABLE `asn_info`(
+	`ip_from` INT(10),
+	`ip_to` INT(10),
+	`cidr` VARCHAR(43),
+	`asn` VARCHAR(10),
+	`as_name` VARCHAR(256)
+);
+CREATE TABLE IF NOT EXISTS ping_result (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ip_address TEXT NOT NULL,
+    ping_result TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS port_scan_result (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ip_address TEXT NOT NULL,
+    scan_result TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS whois_result (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ip_address TEXT NOT NULL,
+    whois_result TEXT
+);
+CREATE TABLE IF NOT EXISTS traceroute_result (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ip_address TEXT NOT NULL,
+    traceroute_result TEXT
+);
+CREATE TABLE IF NOT EXISTS ip_info_result (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ip_address TEXT NOT NULL,
+    country_name TEXT,
+    region_name TEXT,
+    city_name TEXT,
+    asn TEXT,
+    as_name TEXT,
+    domain_name TEXT
+);
+
+
+

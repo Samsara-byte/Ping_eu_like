@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+     body {
+        background-color: white;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden;
+        background-color: white;
+        box-shadow: #6e9cda 0px 0px 10px;
+        padding: 15px 10px;
+        height: 70px;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      input,
+      button {
+        border: none;
+        outline: none;
+        background: none;
+        font-family: "Open Sans", Helvetica, Arial, sans-serif;
+      }
+
+      .tip {
+        font-size: 20px;
+        margin: 40px auto 50px;
+        text-align: center;
+      }
+
+      .cont {
+        border-radius: 20px;
+        overflow: hidden;
+        position: relative;
+        transform: translate(0%, 20%);
+        width: 900px;
+        height: 550px;
+        margin: 0 auto 100px;
+        background: #fff;
+        box-shadow: -10px -10px 15px rgba(255, 255, 255, 0.3),
+          10px 10px 15px rgba(70, 70, 70, 0.15),
+          inset -10px -10px 15px rgba(255, 255, 255, 0.3),
+          inset 10px 10px 15px rgba(70, 70, 70, 0.15);
+      }
+
+      .form {
+        position: relative;
+        width: 640px;
+        height: 100%;
+        padding: 50px 30px 0;
+      }
+
+      .sub-cont {
+        overflow: hidden;
+        position: absolute;
+        left: 640px;
+        top: 0;
+        width: 900px;
+        height: 100%;
+        padding-left: 260px;
+        background: #fff;
+      }
+
+      .cont.s--signup .sub-cont {
+        transform: translate3d(-640px, 0, 0);
+      }
+      #buttons {
+        width: 80vw;
+        margin: auto;
+        text-align: center;
+      }
+      .button {
+        border: none;
+        color: white;
+        padding: 13px 50px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 50px 20px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border-radius: 5%;
+      }
+
+      .button2 {
+        background-color: #6e9cda;
+        color: rgb(255, 255, 255);
+      }
+
+      .button2:hover {
+        background-color: #2d5e9e;
+        color: white;
+      }
+
+
+      button {
+        display: block;
+        margin: 0 auto;
+        width: 260px;
+        height: 36px;
+        border-radius: 30px;
+        color: #fff;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      .img {
+        overflow: hidden;
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 260px;
+        height: 100%;
+        padding-top: 360px;
+      }
+
+      .img:before {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 900px;
+        height: 100%;
+        background-image: url("ext.jpg");
+        opacity: 0.8;
+        background-size: cover;
+      }
+
+      .img:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      .cont.s--signup .img:before {
+        transform: translate3d(640px, 0, 0);
+      }
+
+      .img__text {
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        top: 50px;
+        width: 100%;
+        padding: 0 20px;
+        text-align: center;
+        color: #fff;
+      }
+
+      .img__text h2 {
+        margin-bottom: 10px;
+        font-weight: normal;
+      }
+
+      .img__text p {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .cont.s--signup .img__text.m--up {
+        transform: translateX(520px);
+      }
+
+      .img__text.m--in {
+        transform: translateX(-520px);
+      }
+
+      .cont.s--signup .img__text.m--in {
+        transform: translateX(0);
+      }
+
+      .img__btn {
+        overflow: hidden;
+        z-index: 2;
+        position: relative;
+        width: 100px;
+        height: 36px;
+        margin: 0 auto;
+        background: transparent;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      .img__btn:after {
+        content: "";
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border: 2px solid #fff;
+        border-radius: 30px;
+      }
+
+      .img__btn span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .img__btn span.m--in {
+        transform: translateY(-72px);
+      }
+
+      .cont.s--signup .img__btn span.m--in {
+        transform: translateY(0);
+      }
+
+      .cont.s--signup .img__btn span.m--up {
+        transform: translateY(72px);
+      }
+
+      h2 {
+        width: 100%;
+        font-size: 26px;
+        text-align: center;
+      }
+
+      label {
+        display: block;
+        width: 260px;
+        margin: 25px auto 0;
+        text-align: center;
+      }
+
+      label span {
+        font-size: 12px;
+        color: #cfcfcf;
+        text-transform: uppercase;
+      }
+
+      input {
+        display: block;
+        width: 100%;
+        margin-top: 5px;
+        padding-bottom: 5px;
+        font-size: 16px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+        text-align: center;
+      }
+
+      .forgot-pass {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 12px;
+        color: #cfcfcf;
+      }
+
+      .submit {
+        margin-top: 40px;
+        margin-bottom: 20px;
+        background:#0d76be;
+        text-transform: uppercase;
+      }
+
+      .fb-btn {
+        border: 2px solid #d3dae9;
+        color: #8fa1c7;
+      }
+
+      .fb-btn span {
+        font-weight: bold;
+        color: #455a81;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-right">
+        <h3>Your IP is:</h3><p id="external-ip"></p>
+        <script>
+          $(document).ready(function () {
+            $.getJSON("https://api64.ipify.org?format=json", function (data) {
+              $("#external-ip").text(data.ip);
+            });
+          });
+        </script>
+      </div>
+      <div class="header-left">
+        <button class="button button2" onclick="window.location.href='/login'">
+          Sign In/Up
+        </button>
+      </div>
+    </div>
+
+    <div class="cont">
+      <div class="form sign-in">
+        <h2>Welcome</h2>
+        <form id="login-form" method="post"> 
+            <label>
+                <span>Email</span>
+                <input type="email" name="email" /> 
+            </label>
+            <label>
+                <span>Password</span>
+                <input type="password" name="password" /> 
+            </label>
+            <p class="forgot-pass">Forgot password?</p>
+            <button type="submit" class="submit">Sign In</button>
+        </form>
+    </div>
+      <div class="sub-cont">
+          <div class="img">
+              <div class="img__text m--up">
+               
+                  <h3>Don't have an account? Please Sign up!<h3>
+              </div>
+              <div class="img__text m--in">
+              
+                  <h3>If you already has an account, just sign in.<h3>
+              </div>
+              <div class="img__btn">
+                  <span class="m--up">Sign Up</span>
+                  <span class="m--in">Sign In</span>
+              </div>
+          </div>
+          <div class="form sign-up">
+            <h2>Create your Account</h2>
+            <form action="/register" id="register-form" method="post"> 
+                <label>
+                    <span>Name</span>
+                    <input type="text" name="username" /> 
+                </label>
+                <label>
+                    <span>Email</span>
+                    <input type="email" name="email" /> 
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input type="password" name="password" />
+                </label>
+                <button type="submit" class="submit">Sign Up</button>
+            </form>
+        </div>
+        
+      </div>
+  </div>
+
+    <script>
+    $(document).ready(function () {
+    $("#login-form").submit(function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: "POST", 
+            url: "/login", 
+            data: formData,
+            success: function (data) {
+                window.location.href = "/dashboard"; 
+            },
+            error: function (xhr, status, error) {
+                alert("Login failed: " + xhr.responseText);
+            },
+        });
+    });
+
+    $("#register-form").submit(function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "/register", 
+            data: formData,
+            success: function (data) {
+                window.location.href = "/login";
+            },
+            error: function (xhr, status, error) {
+                alert("Registration failed: " + xhr.responseText);
+            },
+        });
+    });
+});
+      document
+        .querySelector(".img__btn")
+        .addEventListener("click", function () {
+          document.querySelector(".cont").classList.toggle("s--signup");
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        background-color: white;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden;
+        background-color: white;
+        box-shadow: #6e9cda 0px 0px 10px;
+        padding: 15px 10px;
+        height: 70px;
+      }
+
+      .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        display: flex;
+        width: 100%;
+      }
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+      }
+      #buttons {
+        width: 80vw;
+        margin: auto;
+        text-align: center;
+      }
+      .button {
+        border: none;
+        color: white;
+        padding: 13px 50px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 50px 20px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border-radius: 5%;
+      }
+
+      .button2 {
+        background-color: #6e9cda;
+        color: rgb(255, 255, 255);
+      }
+
+      .button2:hover {
+        background-color: #2d5e9e;
+        color: white;
+      }
+
+      .left {
+        display: flex;
+        width: 70%;
+      }
+
+      .output {
+        display: flex;
+        justify-content: center;
+        width: 70%;
+        background-color: #1e283a;
+        margin-left: 5%;
+        align-items: center;
+        margin-top: 20px;
+      }
+      textarea {
+        width: 95%;
+        height: 95%;
+        border: 0;
+        background-color: #27364e;
+      }
+      #outputTextarea {
+        color: #fff;
+        font-size: 20px;
+      }
+      .title {
+        width: 100%;
+        text-align: center;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-right">
+        <h3>Your IP is:</h3><p id="external-ip"></p>
+        <script>
+          $(document).ready(function () {
+      $.getJSON("https://api64.ipify.org?format=json", function (data) {
+        $("#external-ip").text(data.ip);
+      });
+    });
+        </script>
+      </div>
+      <div class="header-left">
+        <button class="button button2" onclick="window.location.href='/login'">
+          Sign In/Up
+        </button>
+      </div>
+    </div>
+    <div class="wrapper">
+      <div class="container">
+        <div class="buttons">
+          <div class="title"><h2>RESULTS LOG</h2></div>
+          <button
+            class="button button2"
+            title="Its shows your IP information history"
+            data-name="ipinfo"
+          >
+            IP İnformation
+          </button>
+          <button
+            class="button button2"
+            title="Its shows your TCP port scanning history"
+            data-name="tcpport"
+          >
+            Port Scanning
+          </button>
+          <button
+            class="button button2"
+            title="Its shows your Whois history"
+            data-name="whois"
+          >
+            Who Is
+          </button>
+          <button
+            class="button button2"
+            title="Its shows your Traceroute history"
+            data-name="traceroute"
+          >
+            Traceroute
+          </button>
+          <button
+            class="button button2"
+            title="Its shows your Ping history"
+            data-name="ping"
+          >
+            Ping
+          </button>
+        </div>
+        <div class="left">
+          <div class="output">
+            <textarea id="outputTextarea"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function formatJSON(json) {
+        return JSON.stringify(json, null, 2).replace(/\\n/g, "\n");
+      }
+
+      $(document).ready(function () {
+        $(".button").on("click", function () {
+          var buttonName = $(this).data("name");
+          $.ajax({
+            url: "/get_data?data-name=" + encodeURIComponent(buttonName),
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              $("#outputTextarea").val(formatJSON(data));
+            },
+            error: function (xhr, status, error) {
+              console.error("Error:", error);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
